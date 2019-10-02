@@ -22,9 +22,9 @@ def print_header
   puts "-------------"
 end
 
-def printwhile(students)
+def printuntil(students)
   index = 0
-  while students.length > index
+  until index >= students.length
     puts "#{index + 1}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
     index += 1
   end
@@ -38,5 +38,5 @@ students = input_students
 
 #nothing happens until we call the methods
 print_header
-printwhile(students)
+printuntil(students)
 print_footer(students)
