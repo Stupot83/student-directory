@@ -22,8 +22,12 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
-  students.each_with_index { |student, index| p "#{index} #{student[:name]} (#{student[:cohort]} cohort)" }
+def formatting(students)
+  students.each_with_index do |student, index|
+    if student[:name].chars.first == "S"
+      puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
 end
 
 def print_footer(names)
@@ -34,5 +38,5 @@ students = input_students
 
 #nothing happens until we call the methods
 print_header
-print(students)
+formatting(students)
 print_footer(students)
