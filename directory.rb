@@ -22,11 +22,11 @@ def print_header
   puts "-------------"
 end
 
-def formatting(students)
-  students.each_with_index do |student, index|
-    if student[:name].length < 12
-      puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
-    end
+def printwhile(students)
+  index = 0
+  while students.length > index
+    puts "#{index + 1}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
+    index += 1
   end
 end
 
@@ -38,5 +38,5 @@ students = input_students
 
 #nothing happens until we call the methods
 print_header
-formatting(students)
+printwhile(students)
 print_footer(students)
