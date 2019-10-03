@@ -3,15 +3,30 @@ def input_students
 
   students = []
 
+  months = [
+    :January,
+    :February,
+    :March,
+    :April,
+    :May,
+    :June,
+    :July,
+    :August,
+    :September,
+    :October,
+    :November,
+    :December,
+  ]
+
   puts "Enter the first name:"
-  first_name = gets.chomp
+  first_name = gets.chomp.split.map(&:capitalize).join(" ")
 
   while !first_name.empty?
     puts "Enter the last name:"
-    last_name = gets.chomp
+    last_name = gets.chomp.split.map(&:capitalize).join(" ")
     until !last_name.empty?
       puts "You need to enter a last name!"
-      last_name = gets.chomp
+      last_name = gets.chomp.split.map(&:capitalize).join(" ")
     end
     puts "Enter the date of birth:"
     date_of_birth = gets.chomp
@@ -20,10 +35,10 @@ def input_students
       date_of_birth = gets.chomp
     end
     puts "Enter the country of birth:"
-    country_of_birth = gets.chomp
+    country_of_birth = gets.chomp.capitalize
     until !country_of_birth.empty?
       puts "You need to enter a country of birth!"
-      country_of_birth = gets.chomp
+      country_of_birth = gets.chomp.capitalize
     end
     puts "Enter the height:"
     height = gets.chomp
@@ -31,17 +46,23 @@ def input_students
       puts "You need to enter a height!"
       height = gets.chomp
     end
-    puts "Enter the cohort:"
-    cohort = gets.chomp
-    until !cohort.empty?
-      puts "You need to enter a cohort!"
-      cohort = gets.chomp
+    puts "Which cohort is the student in?"
+    cohort = gets.chomp.capitalize.to_sym
+    if cohort.empty?
+      cohort = :November
+    end
+    while !months.include?(cohort)
+      puts "Invalid entry. Try again or hit enter to use default cohort)"
+      cohort = gets.chomp.capitalize.to_sym
+      if cohort.empty?
+        cohort = :November
+      end
     end
     puts "Enter the hobbies:"
-    hobbies = gets.chomp
+    hobbies = gets.chomp.capitalize
     until !hobbies.empty?
       puts "You need to enter a hobby!"
-      hobbies = gets.chomp
+      hobbies = gets.chomp.capitalize
     end
 
     students << {
@@ -57,20 +78,20 @@ def input_students
     puts "Now we have #{students.length} students"
 
     puts "Next student! Enter the first name:"
-    first_name = gets.chomp
+    first_name = gets.chomp.split.map(&:capitalize).join(" ")
   end
 
   students
 end
 
 def display_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
 end
 
 def display(students)
   students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:first_name]} #{student[:last_name]} #{student[:country_of_birth]} #{student[:height]} (#{student[:cohort]} cohort) #{student[:hobbies]}"
+    puts "#{index + 1}. #{student[:first_name]} #{student[:last_name]} #{student[:country_of_birth]} #{student[:height]} (#{student[:cohort]} cohort) #{student[:hobbies]}".center(100)
   end
 end
 
