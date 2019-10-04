@@ -10,6 +10,7 @@ def display_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the student directory to csv"
+  puts "4. Load the student directory from csv"
   puts "9. Exit"
 end
 
@@ -27,6 +28,8 @@ def user_action(option)
     display_students_list
   when "3"
     save_students_list
+  when "4"
+    load_students_list
   when "9"
     puts "You are leaving the AllSpark Academy System, have a nice day!"
     exit
@@ -145,6 +148,23 @@ def save_students_list
     ]
     csv_line = student_data.join(" , ")
     file.puts csv_line
+  end
+  file.close
+end
+
+def load_students_list
+  file = File.open("AllSpark_Students.csv", "r")
+  file.readlines.each do |line|
+    first_name, last_name, date_of_birth, country_of_birth, height, cohort, hobbies = line.chomp.split(" , ")
+    @students << {
+      first_name: first_name,
+      last_name: last_name,
+      date_of_birth: date_of_birth,
+      country_of_birth: country_of_birth,
+      height: height,
+      cohort: cohort.to_sym,
+      hobbies: hobbies,
+    }
   end
   file.close
 end
