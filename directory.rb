@@ -1,7 +1,7 @@
 def input_students
   print "Instructions:\n\nPlease enter the student names.\n\nThen to finish, just hit return twice!\n\n"
 
-  students = []
+  @students = []
 
   months = [
     :January,
@@ -18,54 +18,56 @@ def input_students
     :December,
   ]
 
-  puts "Enter the first name:"
-  first_name = gets.chomp.split.map(&:capitalize).join(" ")
+  print "Enter the first name:\n"
+  first_name = gets.delete "\r\n"
 
   while !first_name.empty?
-    puts "Enter the last name:"
-    last_name = gets.chomp.split.map(&:capitalize).join(" ")
+    print "Enter #{first_name}'s last name:\n"
+    last_name = gets.delete "\r\n"
     until !last_name.empty?
-      puts "You need to enter a last name!"
-      last_name = gets.chomp.split.map(&:capitalize).join(" ")
+      print "You need to enter #{first_name}'s last name!\n"
+      last_name = gets.delete "\r\n"
     end
-    puts "Enter the date of birth:"
-    date_of_birth = gets.chomp
+    print "Enter #{first_name}'s date of birth:\n"
+    date_of_birth = gets.delete "\r\n"
     until !date_of_birth.empty?
-      puts "You need to enter a date of birth!"
-      date_of_birth = gets.chomp
+      print "You need to enter #{first_name}'s date of birth!\n"
+      date_of_birth = gets.delete "\r\n"
     end
-    puts "Enter the country of birth:"
-    country_of_birth = gets.chomp.capitalize
+    print "Enter #{first_name}'s country of birth:\n"
+    country_of_birth = gets.delete "\r\n"
     until !country_of_birth.empty?
-      puts "You need to enter a country of birth!"
-      country_of_birth = gets.chomp.capitalize
+      print "You need to enter #{first_name}'s country of birth!\n"
+      country_of_birth = gets.delete "\r\n"
     end
-    puts "Enter the height:"
-    height = gets.chomp
+    print "Enter #{first_name}'s height:\n"
+    height = gets.delete "\r\n"
     until !height.empty?
-      puts "You need to enter a height!"
-      height = gets.chomp
+      print "You need to enter #{first_name}'s height!\n"
+      height = gets.delete "\r\n"
     end
-    puts "Which cohort is the student in?"
+    print "Enter #{first_name}'s cohort\n"
     cohort = gets.chomp.capitalize.to_sym
     if cohort.empty?
       cohort = :November
     end
     while !months.include?(cohort)
-      puts "Invalid entry. Try again or hit enter to use default cohort)"
+      print "Invalid entry. Enter #{first_name}'s cohort or hit enter to use default)\n"
       cohort = gets.chomp.capitalize.to_sym
       if cohort.empty?
         cohort = :November
       end
     end
-    puts "Enter the hobbies:"
-    hobbies = gets.chomp.capitalize
+    print "Enter #{first_name}'s hobbies:\n"
+    hobbylist = gets.delete "\r\n"
+    hobbies = []
+    hobbies << hobbylist.split { " " }
     until !hobbies.empty?
-      puts "You need to enter a hobby!"
-      hobbies = gets.chomp.capitalize
+      print "You need to enter #{first_name}'s hobbies!\n"
+      hobbylist = gets.delete "\r\n"
     end
 
-    students << {
+    @students << {
       first_name: first_name,
       last_name: last_name,
       date_of_birth: date_of_birth,
@@ -75,33 +77,59 @@ def input_students
       hobbies: hobbies,
     }
 
-    puts "Now we have #{students.length} students"
+    if @students.length > 1
+      print "Now we have #{@students.length} students\n"
+    else print "Now we have #{@students.length} student\n"     end
 
-    puts "Next student! Enter the first name:"
-    first_name = gets.chomp.split.map(&:capitalize).join(" ")
+    print "Next student! Enter the first name:\n"
+    first_name = gets.delete "\r\n"
   end
 
-  students
+  @students
 end
 
 def display_header
-  puts "The students of Villains Academy".center(100)
-  puts "-------------".center(100)
+  print "The Students of AllSpark Academy\n-------------\n"
 end
 
 def display(students)
   students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:first_name]} #{student[:last_name]} #{student[:country_of_birth]} #{student[:height]} (#{student[:cohort]} cohort) #{student[:hobbies]}".center(100)
+    print "#{index + 1}. #{student[:first_name]} #{student[:last_name]} #{student[:country_of_birth]} #{student[:height]} (#{student[:cohort]} cohort) #{student[:hobbies]}\n"
   end
 end
 
-def display_footer(names)
-  puts "Overall, we have #{names.count} great students"
+# Code below was to display students by cohort
+
+# def display_cohort_list(students)
+#   if !students.is_a? Array
+#     return empty_list_error
+#   else
+#     groups = {}
+#     students.each do |student|
+#       cohort = student[:cohort]
+#       if groups[cohort] == nil
+#         groups[cohort] = []
+#       end
+#       groups[cohort].push(student[:first_name])
+#     end
+#     groups.each do |key, value|
+#       puts "#{key}:"
+#       value.each do |first_name|
+#         puts first_name
+#       end
+#       puts "-----"
+#     end
+#   end
+# end
+
+def display_footer(students)
+  if @students.length > 1
+    print "In total we have #{@students.length} students\n"
+  else print "In total we have #{@students.length} student\n"   end
 end
 
 students = input_students
 
-#nothing happens until we call the methods
 display_header
 display(students)
 display_footer(students)
